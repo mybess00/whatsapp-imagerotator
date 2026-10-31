@@ -2,7 +2,7 @@ import { createRoot, type Root } from 'react-dom/client'
 import { RotationControls } from '../components/RotationControls'
 import controlsStyles from '../styles/content.css?inline'
 import { ImageRotator } from './image-rotator'
-import { findActiveImage, findViewer, findZoomOutButton } from './viewer-detector'
+import { findActiveImage, findViewer, findZoomOutAnchor } from './viewer-detector'
 
 const HOST_ATTRIBUTE = 'data-whatsapp-image-rotator'
 
@@ -66,14 +66,14 @@ export function observeImageViewer(): () => void {
       return
     }
 
-    const zoomOutButton = findZoomOutButton(viewer)
+    const zoomOutAnchor = findZoomOutAnchor(viewer)
 
-    if (zoomOutButton?.parentElement) {
+    if (zoomOutAnchor?.parentElement) {
       if (
-        host.parentElement !== zoomOutButton.parentElement ||
-        host.nextElementSibling !== zoomOutButton
+        host.parentElement !== zoomOutAnchor.parentElement ||
+        host.nextElementSibling !== zoomOutAnchor
       ) {
-        zoomOutButton.before(host)
+        zoomOutAnchor.before(host)
       }
 
       host.classList.remove('rotator-floating')

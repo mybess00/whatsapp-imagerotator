@@ -31,4 +31,4 @@ La compilación genera la extensión lista para cargar en `dist\`.
 
 ## Uso
 
-Al abrir una imagen, los controles se insertan antes del botón nativo **Zoom out** cuando está disponible. Si no se encuentra ese control, aparece una barra flotante en la esquina inferior derecha. Rotar a la izquierda o derecha añade 90°, el botón de 180° añade media vuelta y **Reset rotation** vuelve a la orientación original. La rotación se reinicia al cambiar de imagen o cerrar el visor.
+Al abrir una imagen, los controles se insertan antes del `div[title="Zoom out"]` nativo cuando está disponible. Si WhatsApp elimina ese `title` al ampliar, la extensión busca `button[aria-label="Zoom out"]` y coloca los controles antes de su ancestro situado tres niveles arriba. Si tampoco encuentra ese ancla, aparece una barra flotante en la esquina inferior derecha. Rotar a la izquierda o derecha añade 90°, el botón de 180° añade media vuelta y **Reset rotation** vuelve a la orientación original. La rotación se reinicia al cambiar de imagen o cerrar el visor.
