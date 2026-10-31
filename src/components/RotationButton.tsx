@@ -1,4 +1,4 @@
-import type { KeyboardEvent, MouseEvent, ReactNode } from 'react'
+import type { KeyboardEvent, PointerEvent, ReactNode } from 'react'
 
 interface RotationButtonProps {
   label: string
@@ -17,16 +17,26 @@ export function RotationButton({ label, icon, onClick }: RotationButtonProps) {
         event.stopPropagation()
         onClick()
       }}
-      onPointerDown={stopPropagation}
-      onKeyDown={stopPropagation}
+      onPointerDown={preservePageFocus}
+      onKeyDown={releaseFocusForArrowNavigation}
     >
       {icon}
     </button>
   )
 }
 
-function stopPropagation(
-  event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>,
-) {
+function preservePageFocus(event: PointerEvent<HTMLButtonElement>) {
+  event.preventDefault()
   event.stopPropagation()
+}
+
+function releaseFocusForArrowNavigation(event: KeyboardEvent<HTMLButtonElement>) {
+  if (
+    event.key === 'ArrowLeft' ||
+    event.key === 'ArrowRight' ||
+    event.key === 'ArrowUp' ||
+    event.key === 'ArrowDown'
+  ) {
+    event.currentTarget.blur()
+  }
 }
