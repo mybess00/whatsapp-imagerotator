@@ -1,0 +1,84 @@
+:host {
+  all: initial;
+  box-sizing: border-box;
+  display: inline-flex;
+  position: relative;
+  vertical-align: middle;
+  z-index: 9999;
+}
+
+:host(.rotator-floating) {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2147483647;
+}
+
+.rotation-toolbar {
+  align-items: center;
+  background: rgba(32, 44, 51, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.28);
+  color: #f0f2f5;
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+}
+
+:host(.rotator-floating) .rotation-toolbar {
+  background: rgba(17, 27, 33, 0.97);
+  border-radius: 14px;
+  padding: 5px;
+}
+
+.rotation-button {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  box-sizing: border-box;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  height: 38px;
+  justify-content: center;
+  margin: 0;
+  padding: 8px;
+  transition: background-color 120ms ease, transform 120ms ease;
+  width: 38px;
+}
+
+.rotation-button:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.rotation-button:active {
+  background: rgba(255, 255, 255, 0.22);
+  transform: scale(0.94);
+}
+
+.rotation-button:focus-visible {
+  outline: 2px solid #53bdeb;
+  outline-offset: 1px;
+}
+
+.rotation-button svg {
+  display: block;
+  fill: none;
+  height: 21px;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  width: 21px;
+}
+
+.rotation-button .icon-label {
+  fill: currentColor;
+  font-family: Arial, sans-serif;
+  font-size: 5.5px;
+  font-weight: 700;
+  stroke: none;
+}
