@@ -4,6 +4,7 @@ interface InlineStyleValue {
 }
 
 export class ImageRotator {
+  private target: HTMLElement | null = null
   private image: HTMLImageElement | null = null
   private identity: string | null = null
   private angle = 0
@@ -14,12 +15,17 @@ export class ImageRotator {
     return this.angle
   }
 
-  setImage(image: HTMLImageElement | null, identity: string | null): boolean {
-    if (this.image === image && this.identity === identity) {
+  setTarget(
+    target: HTMLElement | null,
+    image: HTMLImageElement | null,
+    identity: string | null,
+  ): boolean {
+    if (this.target === target && this.image === image && this.identity === identity) {
       return false
     }
 
     this.restoreImageStyles()
+    this.target = target
     this.image = image
     this.identity = identity
     this.angle = 0
@@ -35,7 +41,7 @@ export class ImageRotator {
   }
 
   clear(): void {
-    this.setImage(null, null)
+    this.setTarget(null, null, null)
   }
 
   private setAngle(degrees: number): void {
@@ -44,7 +50,7 @@ export class ImageRotator {
   }
 
   private applyRotation(): void {
-    if (!this.image) {
+    if (!this.target) {
       return
     }
 
@@ -53,17 +59,17 @@ export class ImageRotator {
       return
     }
 
-    if (!this.originalRotate || !this.originalTransformOrigin) {
-      this.originalRotate = readInlineStyle(this.image.style, 'rotate')
-      this.originalTransformOrigin = readInlineStyle(this.image.style, 'transform-origin')
+    if (this.originalRotate === null || this.originalTransformOrigin === null) {
+      this.originalRotate = readInlineStyle(this.target.style, 'rotate')
+      this.originalTransformOrigin = readInlineStyle(this.target.style, 'transform-origin')
     }
 
-    this.image.style.setProperty('rotate', `${this.angle}deg`)
-    this.image.style.setProperty('transform-origin', 'center center')
+    this.target.style.setProperty('rotate', `${this.angle}deg`)
+    this.target.style.setProperty('transform-origin', 'center center')
   }
 
   private restoreImageStyles(): void {
-    if (!this.image) {
+    if (!this.target) {
       this.originalRotate = null
       this.originalTransformOrigin = null
       this.angle = 0
@@ -71,9 +77,9 @@ export class ImageRotator {
     }
 
     if (this.originalRotate) {
-      restoreInlineStyle(this.image.style, 'rotate', this.originalRotate)
+      restoreInlineStyle(this.target.style, 'rotate', this.originalRotate)
       restoreInlineStyle(
-        this.image.style,
+        this.target.style,
         'transform-origin',
         this.originalTransformOrigin ?? { value: '', priority: '' },
       )

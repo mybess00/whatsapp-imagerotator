@@ -1,6 +1,6 @@
 # WhatsApp Image Rotator
 
-Extensión Manifest V3 para Chrome y Microsoft Edge. Añade controles al visor de imágenes de WhatsApp Web y rota la imagen visible sin descargarla ni modificar el archivo enviado o recibido.
+Extensión Manifest V3 para Chrome y Microsoft Edge. Añade controles al visor de imágenes de WhatsApp Web y aplica la rotación directamente al `div[data-testid="media-zoomable"]`, sin descargar ni modificar el archivo enviado o recibido. La imagen contenida en el visor se usa únicamente para detectar la navegación y restablecer el ángulo.
 
 ## Desarrollo y compilación
 

@@ -110,7 +110,7 @@ export function observeImageViewer(): () => void {
       return
     }
 
-    const imageChanged = rotator.setImage(activeImage.element, activeImage.identity)
+    const imageChanged = rotator.setTarget(viewer, activeImage.element, activeImage.identity)
     if (!host) {
       createControls()
     } else if (imageChanged) {
