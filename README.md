@@ -1,44 +1,46 @@
 # WhatsApp Image Rotator
 
-Extensión Manifest V3 para Chrome y Microsoft Edge. Añade controles al visor de imágenes de WhatsApp Web y aplica la rotación directamente al `div[data-testid="media-zoomable"]`, sin descargar ni modificar el archivo enviado o recibido. La imagen contenida en el visor se usa únicamente para detectar la navegación y restablecer el ángulo.
+A Manifest V3 extension for Google Chrome and Microsoft Edge. It adds rotation controls to the WhatsApp Web image viewer and applies rotation directly to the `div[data-testid="media-zoomable"]` element, without downloading or modifying the original image file. The image displayed in the viewer is used only to detect image navigation and reset the rotation angle.
 
-## Licencia
+## License
 
-Este proyecto se distribuye bajo una **licencia propietaria de uso personal**. Se permite instalar, utilizar y modificar el código para uso personal y no comercial, pero no redistribuir, publicar, compartir ni vender el proyecto o versiones modificadas sin autorización escrita del titular de los derechos.
+This project is distributed under a **proprietary personal-use license**. You may install, use, and modify the code for your own personal, non-commercial purposes. You may not redistribute, publish, share, or sell the project or modified versions without prior written permission from the copyright holder.
 
-Consulta los términos completos en [LICENSE.md](./LICENSE.md). Los componentes de terceros continúan sujetos a sus respectivas licencias.
+See [LICENSE.md](./LICENSE.md) for the complete terms. Third-party components remain subject to their respective licenses.
 
-## Aviso sobre el uso de inteligencia artificial
+## AI-Generated Code Notice
 
-Todo el código de este proyecto fue generado mediante herramientas de inteligencia artificial (IA) y no ha sido revisado ni auditado por un desarrollador humano. Puede contener errores, defectos, problemas de compatibilidad o vulnerabilidades. Consulta [DISCLAIMER.md](./DISCLAIMER.md) antes de utilizarlo.
+All code in this project was generated using artificial intelligence (AI) tools and has not been reviewed or audited by a human software developer. It may contain bugs, defects, compatibility issues, or security vulnerabilities. Read [DISCLAIMER.md](./DISCLAIMER.md) before installing or using the extension.
 
-## Desarrollo y compilación
+## Development and Build
 
-Requiere Node.js compatible con Vite y `pnpm`.
+Requires a Node.js version compatible with Vite and `pnpm`.
 
 ```powershell
 pnpm install
 pnpm build
 ```
 
-La compilación genera la extensión lista para cargar en `dist\\`.
+The build process generates the extension package in the `dist/` directory.
 
-## Instalación en Chrome
+## Installation in Chrome
 
-1. Ejecuta `pnpm build`.
-2. Abre `chrome://extensions`.
-3. Activa **Developer mode**.
-4. Selecciona **Load unpacked** y elige la carpeta `dist`.
-5. Abre o recarga WhatsApp Web en `https://web.whatsapp.com/`.
+1. Run `pnpm build`.
+2. Open `chrome://extensions`.
+3. Enable **Developer mode**.
+4. Select **Load unpacked** and choose the `dist` directory.
+5. Open or reload WhatsApp Web at `https://web.whatsapp.com/`.
 
-## Instalación en Microsoft Edge
+## Installation in Microsoft Edge
 
-1. Ejecuta `pnpm build`.
-2. Abre `edge://extensions`.
-3. Activa **Developer mode**.
-4. Selecciona **Load unpacked** y elige la carpeta `dist`.
-5. Abre o recarga WhatsApp Web en `https://web.whatsapp.com/`.
+1. Run `pnpm build`.
+2. Open `edge://extensions`.
+3. Enable **Developer mode**.
+4. Select **Load unpacked** and choose the `dist` directory.
+5. Open or reload WhatsApp Web at `https://web.whatsapp.com/`.
 
-## Uso
+## Usage
 
-Al abrir una imagen, los controles se insertan antes del control nativo cuyo `title` indique alejar/reducir zoom en inglés, español, portugués, francés, italiano o alemán. Si WhatsApp elimina ese `title` al ampliar, la extensión busca el `button[aria-label]` localizado y coloca los controles antes de su ancestro situado tres niveles arriba. Si tampoco encuentra ese ancla, aparece una barra flotante en la esquina inferior derecha. Rotar a la izquierda o derecha añade 90°, el botón de 180° añade media vuelta y **Reset rotation** vuelve a la orientación original. La rotación se reinicia al cambiar de imagen o cerrar el visor.
+When an image is opened, the extension attempts to insert its controls before the native control whose `title` indicates zooming out in English, Spanish, Portuguese, French, Italian, or German. If WhatsApp removes that `title` when the image is enlarged, the extension looks for a localized `button[aria-label]` and inserts the controls before an ancestor three levels above it. If neither anchor is found, a floating toolbar appears in the bottom-right corner.
+
+The left and right rotation buttons rotate the image by 90 degrees. The 180-degree button rotates it by half a turn, and **Reset rotation** restores the original orientation. Rotation is reset when the displayed image changes or the viewer is closed.
