@@ -1,6 +1,27 @@
 export const VIEWER_SELECTOR = 'div[data-testid="media-zoomable"]'
-const ZOOM_OUT_SELECTOR = 'div[title="Zoom out"]'
-const ZOOM_OUT_BUTTON_SELECTOR = 'button[aria-label="Zoom out"]'
+const ZOOM_OUT_TITLE_SELECTOR = 'div[title]'
+const ZOOM_OUT_BUTTON_SELECTOR = 'button[aria-label]'
+const ZOOM_OUT_LABELS = new Set([
+  'zoom out',
+  'alejar',
+  'reducir zoom',
+  'reducir el zoom',
+  'diminuir zoom',
+  'diminuir o zoom',
+  'diminuir',
+  'reduzir zoom',
+  'reduzir o zoom',
+  'dezoomer',
+  'reduire le zoom',
+  'zoom arriere',
+  'reduire',
+  'riduci zoom',
+  'riduci lo zoom',
+  'riduci',
+  'verkleinern',
+  'zoom verkleinern',
+  'herauszoomen',
+])
 
 export interface ActiveImage {
   element: HTMLImageElement
@@ -32,10 +53,13 @@ export function findActiveImage(viewer: HTMLElement): ActiveImage | null {
 }
 
 export function findZoomOutAnchor(viewer: HTMLElement): HTMLElement | null {
-  const buttons = Array.from(document.querySelectorAll<HTMLElement>(ZOOM_OUT_SELECTOR))
+  const buttons = Array.from(document.querySelectorAll<HTMLElement>(ZOOM_OUT_TITLE_SELECTOR))
   const titleAnchor =
-    buttons.find((button) => viewer.contains(button) && isVisible(button)) ??
-    buttons.find(isVisible) ??
+    buttons.find(
+      (button) =>
+        viewer.contains(button) && isZoomOutLabel(button.title) && isVisible(button),
+    ) ??
+    buttons.find((button) => isZoomOutLabel(button.title) && isVisible(button)) ??
     null
 
   if (titleAnchor) {
@@ -45,7 +69,9 @@ export function findZoomOutAnchor(viewer: HTMLElement): HTMLElement | null {
   const accessibleButtons = Array.from(
     document.querySelectorAll<HTMLButtonElement>(ZOOM_OUT_BUTTON_SELECTOR),
   )
-  const accessibleButton = accessibleButtons.find(isVisible)
+  const accessibleButton = accessibleButtons.find(
+    (button) => isZoomOutLabel(button.getAttribute('aria-label') ?? '') && isVisible(button),
+  )
 
   if (!accessibleButton) {
     return null
@@ -60,6 +86,15 @@ export function findZoomOutAnchor(viewer: HTMLElement): HTMLElement | null {
   }
 
   return isVisible(anchor) ? anchor : null
+}
+
+export function isZoomOutLabel(label: string): boolean {
+  const normalizedLabel = label
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+  return ZOOM_OUT_LABELS.has(normalizedLabel)
 }
 
 function isVisibleImage(image: HTMLImageElement): boolean {
